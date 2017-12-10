@@ -2,8 +2,34 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import MyAccordion from './Accordion';
-// import Accordion from 'react-responsive-accordion';
-import Collapsible from 'react-collapsible';
+
+var HeaderContainerStyle = {
+  display:'flex',
+  padding:'10px',
+  backgroundColor: '#eee'
+};
+
+var titleToggleStyle = {
+  minWidth:'100px',
+  borderLeft:'2px solid purple',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: '#ccc'
+}
+
+var titleStyle = {
+  flex:1,
+  backgroundColor: '#eee'
+}
+
+let Header1 = (onClick) => (
+  <div onClick={onClick} style={HeaderContainerStyle}>
+    <div style={titleStyle}>
+      <p>Esse é o título do accordion</p>
+    </div>
+  </div>
+)
 
 let Content1 = () => {
   return( 
@@ -18,6 +44,8 @@ let Content1 = () => {
   )
 }
 
+let Content2 = () => <h1>Hey</h1>
+
 class App extends Component {
   render() {
     return (
@@ -27,8 +55,12 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
 
-        <MyAccordion renderContent={() => <Content1/>}/>
-        <MyAccordion renderContent={() => <Content1/>}/>
+        <MyAccordion 
+          renderContent={() => <Content1/>}
+          renderHeader={({isOpen, toggle}) => (
+            <div onClick={toggle}>Oi eu sou um header e o accordion está: {isOpen? 'aberto' : 'fechado'}</div>
+          )}
+        />
 
       </div>
     );

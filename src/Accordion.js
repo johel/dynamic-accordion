@@ -7,26 +7,6 @@ var accordionContainerStyle = {
   height:'0px'
 };
 
-var HeaderContainerStyle = {
-  display:'flex',
-  padding:'10px',
-  backgroundColor: '#eee'
-};
-
-var titleToggleStyle = {
-  minWidth:'100px',
-  borderLeft:'2px solid purple',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  backgroundColor: '#ccc'
-}
-
-var titleStyle = {
-  flex:1,
-  backgroundColor: '#eee'
-}
-
 const Aux = (props) => props.children
 
 export default class Carrossel extends Component{
@@ -53,11 +33,12 @@ export default class Carrossel extends Component{
     }
     return(
       <Aux>
-        <div onClick={this.onToggle} style={HeaderContainerStyle}>
-          <div style={titleStyle}>
-            <p>Esse é o título do accordion</p>
-          </div>
-        </div>
+        {
+          this.props.renderHeader({
+            isOpen,
+            toggle:this.onToggle
+          })
+        }
         <Motion 
           defaultStyle={{ height: 0 }} 
           style={{ height: spring(isOpen ? containerHeight: 0, config) }}
