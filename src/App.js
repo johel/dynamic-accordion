@@ -23,7 +23,7 @@ var titleStyle = {
   backgroundColor: '#eee'
 }
 
-let Header1 = (onClick) => (
+let Header1 = ({onClick}) => (
   <div onClick={onClick} style={HeaderContainerStyle}>
     <div style={titleStyle}>
       <p>Esse é o título do accordion</p>
@@ -57,8 +57,27 @@ class App extends Component {
 
         <MyAccordion 
           renderContent={() => <Content1/>}
-          renderHeader={({isOpen, toggle}) => (
-            <div onClick={toggle}>Oi eu sou um header e o accordion está: {isOpen? 'aberto' : 'fechado'}</div>
+          renderHeader={({isOpen, toggle, getAccordionProps}) => (
+            <div 
+              
+              {
+                ...getAccordionProps({
+                onClick: () => alert("o accordion mudará de estado"),
+                style:{height:'50px', paddingTop:'20px', backgroundColor:`${isOpen? 'green' : '#792929'}`}
+              })}>Oi eu sou um header e o accordion está: {isOpen? 'aberto' : 'fechado'}
+            </div>
+          )}
+        />
+
+        <MyAccordion 
+          renderContent={() => (
+            <div>
+              Sou um conteúdo totalmente diferente
+              <a href="https://placeholder.com"><img src="http://via.placeholder.com/350x150"/></a>
+            </div>)
+          }
+          renderHeader={({isOpen, toggle, getAccordionProps}) => (
+            <Header1 {...getAccordionProps()} />
           )}
         />
 

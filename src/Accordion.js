@@ -20,6 +20,17 @@ export default class Carrossel extends Component{
     this.setState({isOpen: !this.state.isOpen});
   }
 
+  getAccordionProps = ({onClick, style, ...props} = {}) => {
+    return {
+      onClick: (...args) => {
+        onClick && onClick(...args);
+        this.onToggle();
+      },
+      style:{cursor:'pointer', ...style},
+      ...props
+    }
+  }
+
   render(){
     let containerHeight;
     if (this.containerNode){
@@ -36,12 +47,13 @@ export default class Carrossel extends Component{
         {
           this.props.renderHeader({
             isOpen,
-            toggle:this.onToggle
+            toggle:this.onToggle,
+            getAccordionProps:this.getAccordionProps
           })
         }
         <Motion 
           defaultStyle={{ height: 0 }} 
-          style={{ height: spring(isOpen ? containerHeight: 0, config) }}
+          style={{ height: spring(isOpen ? containerHeight : 0, config) }}
         >
           { 
             (value) => {
